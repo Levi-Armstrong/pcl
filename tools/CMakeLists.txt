@@ -8,6 +8,9 @@ PCL_SUBSYS_OPTION (BUILD_tools "${SUBSYS_NAME}" "${SUBSYS_DESC}" ${DEFAULT} "${R
 PCL_SUBSYS_DEPEND (BUILD_tools "${SUBSYS_NAME}" DEPS ${SUBSYS_DEPS})
 
 if (BUILD_tools)
+  IF(BUILD_surface_afront_debug)
+      add_definitions(-DAFRONTDEBUG)
+  ENDIF(BUILD_surface_afront_debug)
 
   PCL_ADD_EXECUTABLE(pcl_sac_segmentation_plane "${SUBSYS_NAME}" sac_segmentation_plane.cpp)
   target_link_libraries(pcl_sac_segmentation_plane pcl_common pcl_io pcl_sample_consensus pcl_segmentation)
@@ -152,6 +155,9 @@ if (BUILD_tools)
 
   PCL_ADD_EXECUTABLE(pcl_grid_min "${SUBSYS_NAME}" grid_min.cpp)
   target_link_libraries(pcl_grid_min pcl_common pcl_io pcl_filters)
+
+  PCL_ADD_EXECUTABLE (pcl_advancing_front_reconstruction "${SUBSYS_NAME}" advancing_front_reconstruction.cpp)
+  target_link_libraries (pcl_advancing_front_reconstruction pcl_common pcl_io pcl_surface)
 
   if(WITH_OPENNI)
     PCL_ADD_EXECUTABLE(pcl_oni2pcd "${SUBSYS_NAME}" oni2pcd.cpp)

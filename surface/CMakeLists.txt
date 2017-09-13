@@ -1,6 +1,10 @@
 set(SUBSYS_NAME surface)
 set(SUBSYS_DESC "Point cloud surface library")
-set(SUBSYS_DEPS common search kdtree octree)
+if(BUILD_surface_afront_debug)
+  set(SUBSYS_DEPS common search kdtree octree geometry visualization)
+else(BUILD_surface_afront_debug)
+  set(SUBSYS_DEPS common search kdtree octree geometry)
+endif(BUILD_surface_afront_debug)
 
 set(build TRUE)
 PCL_SUBSYS_OPTION(build "${SUBSYS_NAME}" "${SUBSYS_DESC}" ON)
@@ -57,6 +61,10 @@ if(build)
         include(src/on_nurbs/on_nurbs.cmake) 
     ENDIF(BUILD_surface_on_nurbs)
 
+    IF(BUILD_surface_afront_debug)
+        add_definitions(-DAFRONTDEBUG)
+    ENDIF(BUILD_surface_afront_debug)
+
     set(POISSON_INCLUDES
         "include/pcl/${SUBSYS_NAME}/3rdparty/poisson4/allocator.h"
         "include/pcl/${SUBSYS_NAME}/3rdparty/poisson4/binary_node.h"
@@ -104,6 +112,7 @@ if(build)
         src/simplification_remove_unused_vertices.cpp
         src/surfel_smoothing.cpp
         src/texture_mapping.cpp
+        src/advancing_front.cpp
         ${VTK_SMOOTHING_SOURCE}
         src/poisson.cpp
         ${HULL_SOURCES}
@@ -130,6 +139,9 @@ if(build)
         "include/pcl/${SUBSYS_NAME}/surfel_smoothing.h"
         "include/pcl/${SUBSYS_NAME}/texture_mapping.h"
         "include/pcl/${SUBSYS_NAME}/poisson.h"
+        "include/pcl/${SUBSYS_NAME}/advancing_front.h"
+        "include/pcl/${SUBSYS_NAME}/advancing_front_utils.h"
+        "include/pcl/${SUBSYS_NAME}/advancing_front_point_type.h"
         ${HULL_INCLUDES}
       #  ${VTK_SMOOTHING_INCLUDES}
       #  ${POISSON_INCLUDES}
@@ -151,6 +163,7 @@ if(build)
         "include/pcl/${SUBSYS_NAME}/impl/surfel_smoothing.hpp"
         "include/pcl/${SUBSYS_NAME}/impl/texture_mapping.hpp"
         "include/pcl/${SUBSYS_NAME}/impl/poisson.hpp"
+        "include/pcl/${SUBSYS_NAME}/impl/advancing_front.hpp"
         ${HULL_IMPLS}
         )
 
@@ -158,7 +171,12 @@ if(build)
     include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include" ${VTK_INCLUDE_DIRS} "${CMAKE_CURRENT_SOURCE_DIR}")
     link_directories(${VTK_LIBRARY_DIRS})
     PCL_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" ${srcs} ${incs} ${impl_incs} ${VTK_SMOOTHING_INCLUDES} ${POISSON_INCLUDES} ${OPENNURBS_INCLUDES} ${ON_NURBS_INCLUDES})
-    target_link_libraries("${LIB_NAME}" pcl_common pcl_search pcl_kdtree pcl_octree ${VTK_LIBRARIES} ${ON_NURBS_LIBRARIES})
+    if(BUILD_surface_afront_debug)
+      target_link_libraries("${LIB_NAME}" pcl_common pcl_search pcl_kdtree pcl_octree pcl_visualization ${VTK_LIBRARIES} ${ON_NURBS_LIBRARIES})
+    else(BUILD_surface_afront_debug)
+      target_link_libraries("${LIB_NAME}" pcl_common pcl_search pcl_kdtree pcl_octree ${VTK_LIBRARIES} ${ON_NURBS_LIBRARIES})
+    endif(BUILD_surface_afront_debug)
+
     if(QHULL_FOUND)
       target_link_libraries("${LIB_NAME}" ${QHULL_LIBRARIES})
     endif(QHULL_FOUND)
