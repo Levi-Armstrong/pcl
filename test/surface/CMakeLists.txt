@@ -10,10 +10,6 @@ PCL_SUBSYS_DEPEND(build "${SUBSYS_NAME}" DEPS ${SUBSYS_DEPS} OPT_DEPS ${OPT_DEPS
 
 if (build)
   if (BUILD_io AND BUILD_features)
-    IF(BUILD_surface_afront_debug)
-        add_definitions(-DAFRONTDEBUG)
-    ENDIF(BUILD_surface_afront_debug)
-
     PCL_ADD_TEST(surface_marching_cubes test_marching_cubes
                  FILES test_marching_cubes.cpp
                  LINK_WITH pcl_gtest pcl_io pcl_kdtree pcl_surface pcl_features pcl_search
