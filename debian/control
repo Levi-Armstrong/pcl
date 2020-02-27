@@ -1,4 +1,4 @@
-Source: pcl
+Source: ros-industrial-pcl1.9
 Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
 Uploaders: Thomas Moulard <thomas.moulard@gmail.com>,
 	   Jochen Sprickerhof <jspricke@debian.org>,
@@ -34,7 +34,7 @@ Vcs-Git: https://salsa.debian.org/science-team/pcl.git
 Rules-Requires-Root: no
 Homepage: http://www.pointclouds.org/
 
-Package: ros-industrial-libpcl-dev
+Package: ros-industrial-libpcl1.9-dev
 Architecture: any
 Section: libdevel
 Depends: libboost-all-dev,

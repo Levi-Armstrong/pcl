@@ -11,7 +11,7 @@ LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
 CFLAGS+=$(CPPFLAGS)
 CXXFLAGS+=$(CPPFLAGS)
 
-BUILD_DOC = $(if $(shell dh_listpackages | grep libpcl-doc),-DWITH_DOCS=ON)
+#BUILD_DOC = $(if $(shell dh_listpackages | grep libpcl-doc),-DWITH_DOCS=ON)
 
 ifneq (,$(filter $(DEB_BUILD_ARCH),arm64 ppc64el mips mipsel))
   PARALLEL=--max-parallel=2
@@ -41,7 +41,7 @@ override_dh_auto_configure:
         -DCMAKE_INSTALL_PREFIX="/opt/ros_industrial/pcl-1.9" \
 	$(BUILD_DOC)
 
-override_dh_install:
+#override_dh_install:
 #	@for i in pcl_concatenate_points_pcd pcl_grabcut_2d \
 #		pcl_elch pcl_dinast_grabber pcl_hdl_grabber \
 #		pcl_icp pcl_icp2d pcl_lum pcl_manual_registration pcl_match_linemod_template \
@@ -73,7 +73,7 @@ override_dh_install:
 #	echo $$cmd; $$cmd; \
 #	done
 		
-	dh_install
+#	dh_install
 
 #override_dh_shlibdeps:
 #	dh_shlibdeps -v -Xopt/ros_industrial/pcl-1.9/bin/pcl_* -Lpcl-tools -l:$(CURDIR)/debian/opt/ros_industrial/pcl-1.9/lib/${DEB_HOST_MULTIARCH}/cloud_composer_plugins: -ppcl --- -xpcl-tools -v
@@ -84,16 +84,16 @@ override_dh_shlibdeps:
 override_dh_installchangelogs:
 	dh_installchangelogs -pros-industrial-libpcl-common1.9 CHANGES.md
 	# Creating dh_links to share the same file
-	@for i in ros-industrial-libpcl-dev ros-industrial-libpcl1.9 ros-industrial-libpcl-apps1.9 \
-                ros-industrial-libpcl-features1.9 ros-industrial-libpcl-filters1.9 ros-industrial-libpcl-io1.9 ros-industrial-libpcl-kdtree1.9 \
-                ros-industrial-libpcl-keypoints1.9 ros-industrial-libpcl-octree1.9 ros-industrial-libpcl-outofcore1.9 ros-industrial-libpcl-people1.9 \
-                ros-industrial-libpcl-recognition1.9 ros-industrial-libpcl-registration1.9 ros-industrial-libpcl-sample-consensus1.9 \
-                ros-industrial-libpcl-search1.9 ros-industrial-libpcl-segmentation1.9 ros-industrial-libpcl-stereo1.9 \
-                ros-industrial-libpcl-surface1.9 ros-industrial-libpcl-tracking1.9 ros-industrial-libpcl-visualization1.9 \
-                pcl-tools ros-industrial-libpcl-doc; do \
-	cmd="dh_link -p$$i opt/ros_industrial/pcl-1.9/share/doc/ros-industrial-libpcl-common1.9/changelog.gz opt/ros_industrial/pcl-1.9/share/doc/$$i/changelog.gz"; \
-	echo $$cmd; $$cmd; \
-	done
+#	@for i in ros-industrial-libpcl1.9-dev ros-industrial-libpcl1.9 ros-industrial-libpcl-apps1.9 \
+#                ros-industrial-libpcl-features1.9 ros-industrial-libpcl-filters1.9 ros-industrial-libpcl-io1.9 ros-industrial-libpcl-kdtree1.9 \
+#                ros-industrial-libpcl-keypoints1.9 ros-industrial-libpcl-octree1.9 ros-industrial-libpcl-outofcore1.9 ros-industrial-libpcl-people1.9 \
+#                ros-industrial-libpcl-recognition1.9 ros-industrial-libpcl-registration1.9 ros-industrial-libpcl-sample-consensus1.9 \
+#                ros-industrial-libpcl-search1.9 ros-industrial-libpcl-segmentation1.9 ros-industrial-libpcl-stereo1.9 \
+#                ros-industrial-libpcl-surface1.9 ros-industrial-libpcl-tracking1.9 ros-industrial-libpcl-visualization1.9 \
+#                pcl-tools ros-industrial-libpcl-doc; do \
+#	cmd="dh_link -p$$i opt/ros_industrial/pcl-1.9/share/doc/ros-industrial-libpcl-common1.9/changelog.gz opt/ros_industrial/pcl-1.9/share/doc/$$i/#changelog.gz"; \
+#	echo $$cmd; $$cmd; \
+#	done
 #	dh_installchangelogs
 
 
