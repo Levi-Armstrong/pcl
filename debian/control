@@ -66,7 +66,6 @@ Depends: libboost-all-dev,
          ros-industrial-libpcl-tracking1.9 (= ${binary:Version}),
          ros-industrial-libpcl-visualization1.9 (= ${binary:Version}),
 	 ${misc:Depends}
-Suggests: ros-industrial-libpcl-doc
 Description: Point Cloud Library - development files
  The Point Cloud Library (PCL) is a standalone, large scale, open
  project for 2D/3D image and point cloud processing.
@@ -406,17 +405,3 @@ Description: Point Cloud Library - point cloud processing tools
  .
  This package gathers tools bundled with PCL to process point clouds.
 
-Package: ros-industrial-libpcl-doc
-Architecture: all
-Section: doc
-Depends: ${misc:Depends}, libjs-jquery
-Multi-Arch: foreign
-Description: Point Cloud Library - documentation
- The Point Cloud Library (PCL) is a standalone, large scale, open
- project for 2D/3D image and point cloud processing.
- .
- The PCL framework contains numerous state-of-the art algorithms
- including filtering, feature estimation, surface reconstruction,
- registration, model fitting and segmentation.
- .
- This package contains the Doxygen generated documentation.
